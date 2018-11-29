@@ -2,10 +2,14 @@ const octokit = require('@octokit/rest')()
 var http = require('http');
 
 var github_data;
-octokit.repos.getForOrg({
-  org: 'octokit',
-  type: 'public'
+
+
+octokit.repos.getContent({
+  owner: 'retecata',
+  repo: 'CS3012',
+  path: ''
 }).then(({ data, headers, status }) => {
+  console.log(data);
    github_data = JSON.stringify(data)
 })
 
