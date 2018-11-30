@@ -1,8 +1,5 @@
-const octokit = require('@octokit/rest')()
+
 var http = require('http');
-const https = require('https');
-const request = require('request');
-const endpoint = 'https://api.github.com';
 const fetch = require('node-fetch');
 
 var github_data;
