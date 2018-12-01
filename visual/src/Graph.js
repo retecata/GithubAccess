@@ -11,18 +11,17 @@ class Graph extends Component{
   componentDidMount(){
     this.createGraph()
   }
-  componentDidUpdate(){
-    this.createGraph()
-  }
+
 
   createGraph(){
     const node = this.node
     var width =460;
     var height = 400;
     const {data} = this.props
+    const {contributors} = this.props
     var nodes = [];
     for (var i = 0; i < data.length; i++) {
-         nodes[i] = {node:data[i]};
+         nodes[i] = {node:data[i],name:contributors[i]};
     }
 
     var links = [];
@@ -30,22 +29,14 @@ class Graph extends Component{
       links[i-1] ={source:0,target:i};
     }
 
-    console.log(links)
-
-   /*var simulation = d3.forceSimulation(nodes)
-          .force('charge', d3.forceManyBody().strength(-100))
-          .force('center', d3.forceCenter(width / 2, height / 2))
-          .force('link', d3.forceLink().links(links));
-    /*var simulation = d3.forceSimulation(nodes)
-    .force('charge', d3.forceManyBody())
-    .force('center', d3.forceCenter(width / 2, height / 2));*/
+    console.log(nodes)
 
     var force = d3.layout.force()
               .nodes(d3.values(nodes))
               .links(links)
               .size([width, height])
-              .linkDistance(100)
-              .charge(-500)
+              .linkDistance(130)
+              .charge(-400)
               .on("tick", tick)
               .start()
 
@@ -61,17 +52,18 @@ class Graph extends Component{
               .attr('stroke-width', '1.5px')
 
 
-
-
   var circles = select(node).append('g').selectAll('circle')
                .data(force.nodes())
                .enter()
                .append('circle')
+               .attr('fill','#ff9966')
+               .attr('stroke','#cc4400')
+               .attr('stroke-width', '1px')
                .attr("r",function(d){
-                 if(d.node>2000) return 20;
-                 if(d.node>1000) return 15;
-                 if(d.node>500)  return 10;
-                 return 5;
+                 if(d.node>2000) return 40;
+                 if(d.node>1000) return 35;
+                 if(d.node>500)  return 30;
+                 return 20;
                })
               .on("mouseover", function(d){
 
@@ -79,7 +71,7 @@ class Graph extends Component{
                           .attr('y',d.y)
                           .attr('opacity','1')
                           .style("text-anchor","middle")
-                          .text(d.node)
+                          .text(d.name)
               var bbox = text_element.node().getBBox();
               rectangle.attr('x',bbox.x-2.5)
                        .attr('y',bbox.y-5)
@@ -99,31 +91,27 @@ class Graph extends Component{
                 rectangle.attr('opacity','0')
               })
 
+
+
+
+
+  var text =   select(node).append('g').selectAll('text')
+             .data(force.nodes())
+             .enter()
+             .append('text')
+             .attr("dx", function(d){return 0})
+             .text(function(d) { return d.node; })
+             .attr("text-anchor", "middle")
+             .style("cursor", "default");
+
        var rectangle = select(node).append('rect')
                         .attr('opacity','0')
       var text_element = select(node).append('text')
                         .attr('opacity','0')
 
-               /*.on("mouseout", function(d) {
-                    div.transition()
-                        .duration(500)
-                        .style("opacity", 0)
-                        .text(d.node)
-                        .attr('x', 8)
-                        .attr('y', '.91em')
-                })*/
 
 
 
-
-  /*var text =   select(node).append('g').selectAll('text')
-                .data(force.nodes())
-                .enter()
-                .append('text')
-                .attr('x', 8)
-                .attr('y', '.91em')
-                .attr("opacity", "0")
-                .text(function(d) { return d.node; });*/
 
 
     d3.selectAll('circle').call(drag);
@@ -135,7 +123,7 @@ class Graph extends Component{
        function tick() {
          path.attr("d", linkArc);
          circles.attr("transform", transform);
-        // text.attr("transform", transform);
+         text.attr("transform", transform);
         }
 
        function linkArc(d) {
