@@ -20,6 +20,7 @@ class BarChart extends Component {
       const yScale = scaleLinear()
          .domain([0, dataMax])
          .range([0, this.props.size[1]])
+
    select(node)
       .selectAll('rect')
       .data(this.props.data)

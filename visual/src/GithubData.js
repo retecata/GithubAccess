@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import BarChart from './BarChart'
+import Graph from './Graph'
 class GithubData extends Component {
   constructor(props) {
     super(props);
@@ -19,16 +19,6 @@ class GithubData extends Component {
           });
           this.setState({ numbers:number_contributions })
         });
-
-      /*  console.log(contributors_name);
-        console.log(number_contributions)
-        this.setState({numbers:number_contributions}, function () {
-          console.log(this.state.numbers);
-          this.forceUpdate();
-        });
-    /*fetch('http://localhost:8000/api/Books')
-      .then(data => data.json())
-      .then((data) => { this.setState({ books: data }) });*/
    }
 
   renderChart(){
@@ -40,7 +30,7 @@ class GithubData extends Component {
     console.log(numbers)
     console.log(numbers.length)
     if (numbers.length !==0) {
-      return <BarChart data={numbers} size={[500,500]} />
+      return <Graph data={numbers} />
     } else {
       return   <span>Loading chart..</span>
     }
