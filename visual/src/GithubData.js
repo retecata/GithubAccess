@@ -4,7 +4,7 @@ import Graph from './Graph'
 class GithubData extends Component {
   constructor(props) {
     super(props);
-    this.state = {numbers: []};
+    this.state = {numbers: [], users: []};
   }
 
   componentDidMount() {
@@ -18,6 +18,7 @@ class GithubData extends Component {
             number_contributions.push(contributor.contributions)
           });
           this.setState({ numbers:number_contributions })
+          this.setStae({users: contributors_name})
         });
    }
 
@@ -27,10 +28,11 @@ class GithubData extends Component {
 
   render() {
     const { numbers } = this.state
+    const { users }   = this.state
     console.log(numbers)
     console.log(numbers.length)
     if (numbers.length !==0) {
-      return <Graph data={numbers} />
+      return <Graph data={numbers} contributors = {users} />
     } else {
       return   <span>Loading chart..</span>
     }

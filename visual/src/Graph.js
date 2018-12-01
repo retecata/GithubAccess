@@ -44,45 +44,98 @@ class Graph extends Component{
               .nodes(d3.values(nodes))
               .links(links)
               .size([width, height])
-              .linkDistance(60)
-              .charge(-300)
+              .linkDistance(100)
+              .charge(-500)
               .on("tick", tick)
               .start()
 
   var drag = force.drag()
              .on("dragstart", dragstart);
 
-   select(node)
-      .selectAll('path')
-      .data(force.links())
-      .enter()
-      .append('path')
-      .attr('fill','none')
-      .attr('stroke','#666')
-      .attr('stroke-width', '1.5px')
+  var path = select(node).append('g').selectAll('path')
+              .data(force.links())
+              .enter()
+              .append('path')
+              .attr('fill','none')
+              .attr('stroke','#666')
+              .attr('stroke-width', '1.5px')
 
-    select(node)
-       .selectAll('circle')
-       .data(force.nodes())
-       .enter()
-       .append('circle')
-       .attr("r", 12)
+
+
+
+  var circles = select(node).append('g').selectAll('circle')
+               .data(force.nodes())
+               .enter()
+               .append('circle')
+               .attr("r",function(d){
+                 if(d.node>2000) return 20;
+                 if(d.node>1000) return 15;
+                 if(d.node>500)  return 10;
+                 return 5;
+               })
+              .on("mouseover", function(d){
+
+              text_element.attr('x',d.x+30)
+                          .attr('y',d.y)
+                          .attr('opacity','1')
+                          .style("text-anchor","middle")
+                          .text(d.node)
+              var bbox = text_element.node().getBBox();
+              rectangle.attr('x',bbox.x-2.5)
+                       .attr('y',bbox.y-5)
+                       .attr("width", bbox.width+10)
+                       .attr("height", bbox.height+10)
+                       .attr('opacity','1')
+                       .attr("rx", 5)         // set the x corner curve radius
+                       .attr("ry", 5)       // set the y corner curve radius
+                       .style("fill", "lightsteelblue")
+                       .style("fill-opacity", ".8")
+                       .style("stroke", "#666")
+                        .style("stroke-width", "1.5px")
+
+              })
+              .on("mouseout", function(d){
+                text_element.attr('opacity','0')
+                rectangle.attr('opacity','0')
+              })
+
+       var rectangle = select(node).append('rect')
+                        .attr('opacity','0')
+      var text_element = select(node).append('text')
+                        .attr('opacity','0')
+
+               /*.on("mouseout", function(d) {
+                    div.transition()
+                        .duration(500)
+                        .style("opacity", 0)
+                        .text(d.node)
+                        .attr('x', 8)
+                        .attr('y', '.91em')
+                })*/
+
+
+
+
+  /*var text =   select(node).append('g').selectAll('text')
+                .data(force.nodes())
+                .enter()
+                .append('text')
+                .attr('x', 8)
+                .attr('y', '.91em')
+                .attr("opacity", "0")
+                .text(function(d) { return d.node; });*/
+
 
     d3.selectAll('circle').call(drag);
+
 
        function dragstart(d) {
          d.fixed = true;
         }
        function tick() {
-         select(node)
-            .selectAll('path')
-            .data(force.links())
-            .attr("d", linkArc)
-
-         select(node)
-            .selectAll('circle')
-            .data(force.nodes())
-            .attr("transform", transform);
+         path.attr("d", linkArc);
+         circles.attr("transform", transform);
+        // text.attr("transform", transform);
         }
 
        function linkArc(d) {
