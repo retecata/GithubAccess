@@ -1,6 +1,6 @@
-# Github Data Visualization
-This project is part of CS3012 Coursework, Trinity College Dublin.
-The aim is to interrogate the Github API and fetch data that could be useful in elucidating aspects of the software engineering process. The course requires the data to be used in some sort of visualization.
+# Github Data Visualizatione
+This project is part of CS3012 Coursework, Trinity College Dublin.  
+The aim is to interrogate the Github API and fetch data that could be useful in elucidating aspects of the software engineering process. The course requires the data to be used in some sort of visualization. The project I put together collects data regarding repos, commits and contributors and shows it in a Force Directed Graph. The size of the nodes scales depending on the number of commits. This way, my application makes it easy to view the users with the most impact on a project. (The number of contributors shown is capped at 30). 
 
 ## Technologies used
 1. React
@@ -45,8 +45,13 @@ In case the interface is confusing, which I hope is not. There is a help button 
 
 ## Install
 Installation requires npm to be installed on the machine. All the dependecies of the project are listed in /visual/package.json. Thus, simply clone the Github repo, then perform  
+<br>
 **npm install**  
+<br>
+
 Then   
+<br>
 **npm start**  
+<br>
 Which runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
