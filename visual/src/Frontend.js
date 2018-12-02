@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import './App.css'
 import Graph from './Graph'
 import ReactTooltip from 'react-tooltip'
 import help from './h.png';
