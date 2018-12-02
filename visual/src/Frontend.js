@@ -44,7 +44,6 @@ class Frontend extends Component {
   renderForm(){
     return(
       <form onSubmit = {this.handleSubmit}>
-
         <label> Enter User </label>
         <input type="text" name="user" onChange={this.handleChange} />
 
