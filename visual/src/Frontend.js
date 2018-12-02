@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import './App.css'
 import Graph from './Graph'
-
+import ReactTooltip from 'react-tooltip'
+import help from './h.png';
 
 class Frontend extends Component {
   constructor(props) {
@@ -68,6 +69,7 @@ class Frontend extends Component {
   renderForm(){
     return(
       <div style={styles.form}>
+        <img  data-tip="Enter a user to get all their repositories and the sizes, or enter a user and a repo to see all the contributors and the number of commits." src={help} style={{width: 40, height: 40,   float: 'left', position: 'relative',bottom: '5px'}} />
         <form onSubmit = {this.handleSubmit}>
           <label> Enter User </label>
           <input type="text" name="user" onChange={this.handleChange} />
@@ -86,14 +88,18 @@ class Frontend extends Component {
     if (numbers.length !==0) {
       return(
         <div>
+        <ReactTooltip />
           {this.renderForm()}
+
          <Graph data={numbers} contributors = {users} />
          </div>
        );
     } else {
       return(
         <div>
+          <ReactTooltip />
           {this.renderForm()}
+
           <span>Loading chart..</span>
         </div>
       );
@@ -112,7 +118,7 @@ const styles = {
     border: '1px solid #ffa64d',
     padding: '10px',
     backgroundColor: '#ffcc99',
-  }
+  },
 }
 
 export default Frontend
