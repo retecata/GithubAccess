@@ -7,3 +7,7 @@ The aim is to interrogate the Github API and fetch data that could be useful in 
 2. D3
 3. Node.js
 4. NPM
+
+### [React](https://reactjs.org/)
+React is a declarative, component-based JavaScript library used for building interfaces.
+I used React both for the frontend and fetching the data, with the built-in fetch command.
