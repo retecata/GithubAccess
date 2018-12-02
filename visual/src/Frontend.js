@@ -6,7 +6,7 @@ import Graph from './Graph'
 class Frontend extends Component {
   constructor(props) {
     super(props);
-    this.state = {user: 'tensorflow', repo: 'tensorflow',numbers: [], users: []};
+    this.state = {user: 'tensorflow', repo: '',numbers: [], users: []};
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.fetch = this.fetch.bind(this);
@@ -14,6 +14,7 @@ class Frontend extends Component {
   }
 
   fetch(){
+    if (this.state.repo!==''){
     var contributors_name = [];
     var number_contributions = [];
     var endpoint = 'https://api.github.com/repos/'+ this.state.user + '/'+this.state.repo + '/contributors'
@@ -22,11 +23,33 @@ class Frontend extends Component {
       .then(res => res.json())
       .then(json =>{
         json.forEach((contributor)=>{
-          contributors_name.push(contributor.login);
+          contributors_name.push("User: " + contributor.login);
           number_contributions.push(contributor.contributions)
         });
         this.setState({ numbers:number_contributions,users:contributors_name })
+      }).catch(function() {
+        alert('Wops! Something went wrong! Make sure the user and repo provided are correct!');
       });
+    }else{
+      //look for repos and commits
+      var repos = []
+      var commits = []
+      var endpoint = 'https://api.github.com/users/'+this.state.user+'/repos'
+      console.log(endpoint)
+      fetch(endpoint)
+        .then(res => res.json())
+        .then(json =>{
+          console.log(json)
+          json.forEach((repo)=>{
+            repos.push("Repo: " + repo.name);
+            commits.push(repo.size)
+          });
+          this.setState({ numbers:commits,users:repos })
+        }).catch(function() {
+          alert('Wops! Something went wrong! Make sure the user and repo provided are correct!');
+        });
+
+    }
   }
 
   componentDidMount(){
@@ -39,7 +62,6 @@ class Frontend extends Component {
 
    handleSubmit(event) {
     this.fetch()
-    alert('An essay was submitted: ' + this.state.user +" "+ this.state.repo);
     event.preventDefault();
   }
 
