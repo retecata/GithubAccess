@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import './App.css'
 import Graph from './Graph'
+
+
 class Frontend extends Component {
   constructor(props) {
     super(props);
@@ -43,7 +45,7 @@ class Frontend extends Component {
 
   renderForm(){
     return(
-      <div className = ".Form">
+      <div style={styles.form}>
         <form onSubmit = {this.handleSubmit}>
           <label> Enter User </label>
           <input type="text" name="user" onChange={this.handleChange} />
@@ -77,4 +79,18 @@ class Frontend extends Component {
 
   }
 }
+
+const styles = {
+  form:{
+    margin: '0 auto',
+    width: '80%',
+    borderRadius: '5px',
+    boxShadow: '7px 7px 10px grey',
+    textAlign: 'center',
+    border: '1px solid #ffa64d',
+    padding: '10px',
+    backgroundColor: '#ffcc99',
+  }
+}
+
 export default Frontend
