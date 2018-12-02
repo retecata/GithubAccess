@@ -43,14 +43,16 @@ class Frontend extends Component {
 
   renderForm(){
     return(
-      <form onSubmit = {this.handleSubmit}>
-        <label> Enter User </label>
-        <input type="text" name="user" onChange={this.handleChange} />
+      <div className = ".Form">
+        <form onSubmit = {this.handleSubmit}>
+          <label> Enter User </label>
+          <input type="text" name="user" onChange={this.handleChange} />
 
-        <label> Enter Repo </label>
-        <input type="text" name="repo" onChange={this.handleChange} />
-        <input type="submit" value="Submit" />
-      </form>
+          <label> Enter Repo </label>
+          <input type="text" name="repo" onChange={this.handleChange} />
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
     );
   }
   render() {
