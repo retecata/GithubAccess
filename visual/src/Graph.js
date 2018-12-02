@@ -13,7 +13,6 @@ class Graph extends Component{
     this.createGraph()
   }
 
-
   createGraph(){
     const node = this.node
     var width =460;
@@ -41,105 +40,94 @@ class Graph extends Component{
               .on("tick", tick)
               .start()
 
-  var drag = force.drag()
-             .on("dragstart", dragstart);
+    var drag = force.drag()
+               .on("dragstart", dragstart);
 
-  var path = select(node).append('g').selectAll('path')
-              .data(force.links())
-              .enter()
-              .append('path')
-              .attr('fill','none')
-              .attr('stroke','#666')
-              .attr('stroke-width', '1.5px')
+    var path = select(node).append('g').selectAll('path')
+                .data(force.links())
+                .enter()
+                .append('path')
+                .attr('fill','none')
+                .attr('stroke','#666')
+                .attr('stroke-width', '1.5px')
 
 
-  var circles = select(node).append('g').selectAll('circle')
+    var circles = select(node).append('g').selectAll('circle')
+                 .data(force.nodes())
+                 .enter()
+                 .append('circle')
+                 .attr('fill','#ff9966')
+                 .attr('stroke','#cc4400')
+                 .attr('stroke-width', '1px')
+                 .attr("r",function(d){
+                   if(d.node>2000) return 40;
+                   if(d.node>1000) return 35;
+                   if(d.node>500)  return 30;
+                   return 20;
+                 })
+                .on("mouseover", function(d){
+
+                text_element.attr('x',d.x+30)
+                            .attr('y',d.y)
+                            .attr('opacity','1')
+                            .style("text-anchor","middle")
+                            .text(d.name)
+                var bbox = text_element.node().getBBox();
+                rectangle.attr('x',bbox.x-2.5)
+                         .attr('y',bbox.y-5)
+                         .attr("width", bbox.width+10)
+                         .attr("height", bbox.height+10)
+                         .attr('opacity','1')
+                         .attr("rx", 5)         // set the x corner curve radius
+                         .attr("ry", 5)       // set the y corner curve radius
+                         .style("fill", "lightsteelblue")
+                         .style("fill-opacity", ".8")
+                         .style("stroke", "#666")
+                          .style("stroke-width", "1.5px")
+
+                })
+                .on("mouseout", function(d){
+                  text_element.attr('opacity','0')
+                  rectangle.attr('opacity','0')
+                })
+
+    var text =   select(node).append('g').selectAll('text')
                .data(force.nodes())
                .enter()
-               .append('circle')
-               .attr('fill','#ff9966')
-               .attr('stroke','#cc4400')
-               .attr('stroke-width', '1px')
-               .attr("r",function(d){
-                 if(d.node>2000) return 40;
-                 if(d.node>1000) return 35;
-                 if(d.node>500)  return 30;
-                 return 20;
-               })
-              .on("mouseover", function(d){
+               .append('text')
+               .attr("dx", function(d){return 0})
+               .text(function(d) { return d.node; })
+               .attr("text-anchor", "middle")
+               .style("cursor", "default");
 
-              text_element.attr('x',d.x+30)
-                          .attr('y',d.y)
-                          .attr('opacity','1')
-                          .style("text-anchor","middle")
-                          .text(d.name)
-              var bbox = text_element.node().getBBox();
-              rectangle.attr('x',bbox.x-2.5)
-                       .attr('y',bbox.y-5)
-                       .attr("width", bbox.width+10)
-                       .attr("height", bbox.height+10)
-                       .attr('opacity','1')
-                       .attr("rx", 5)         // set the x corner curve radius
-                       .attr("ry", 5)       // set the y corner curve radius
-                       .style("fill", "lightsteelblue")
-                       .style("fill-opacity", ".8")
-                       .style("stroke", "#666")
-                        .style("stroke-width", "1.5px")
-
-              })
-              .on("mouseout", function(d){
-                text_element.attr('opacity','0')
-                rectangle.attr('opacity','0')
-              })
-
-
-
-
-
-  var text =   select(node).append('g').selectAll('text')
-             .data(force.nodes())
-             .enter()
-             .append('text')
-             .attr("dx", function(d){return 0})
-             .text(function(d) { return d.node; })
-             .attr("text-anchor", "middle")
-             .style("cursor", "default");
-
-       var rectangle = select(node).append('rect')
-                        .attr('opacity','0')
-      var text_element = select(node).append('text')
-                        .attr('opacity','0')
-
-
-
-
-
+         var rectangle = select(node).append('rect')
+                          .attr('opacity','0')
+        var text_element = select(node).append('text')
+                          .attr('opacity','0')
 
     d3.selectAll('circle').call(drag);
 
+    function dragstart(d) {
+       d.fixed = true;
+    }
+    function tick() {
+       path.attr("d", linkArc);
+       circles.attr("transform", transform);
+       text.attr("transform", transform);
+    }
 
-       function dragstart(d) {
-         d.fixed = true;
-        }
-       function tick() {
-         path.attr("d", linkArc);
-         circles.attr("transform", transform);
-         text.attr("transform", transform);
-        }
+    function linkArc(d) {
+       var dx = d.target.x - d.source.x,
+           dy = d.target.y - d.source.y,
+           dr = Math.sqrt(dx * dx + dy * dy);
+      return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+    }
 
-       function linkArc(d) {
-         var dx = d.target.x - d.source.x,
-             dy = d.target.y - d.source.y,
-             dr = Math.sqrt(dx * dx + dy * dy);
-         return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
-       }
-
-         function transform(d) {
-           return "translate(" + d.x + "," + d.y + ")";
-         }
-     }
+      function transform(d) {
+         return "translate(" + d.x + "," + d.y + ")";
+      }
+    }
   render() {
-        //console.log(this.props.data)
         const {current_data} = this.state
         if(JSON.stringify(current_data)!==JSON.stringify(this.props.data)){
           select(this.node).selectAll("*").remove();
