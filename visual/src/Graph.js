@@ -7,6 +7,7 @@ class Graph extends Component{
   constructor(props){
     super(props)
     this.createGraph = this.createGraph.bind(this)
+    this.state = {current_data:[]}
   }
   componentDidMount(){
     this.createGraph()
@@ -30,7 +31,7 @@ class Graph extends Component{
     }
 
     console.log(nodes)
-
+    console.log("hello")
     var force = d3.layout.force()
               .nodes(d3.values(nodes))
               .links(links)
@@ -138,7 +139,13 @@ class Graph extends Component{
          }
      }
   render() {
-        console.log(this.props.data)
+        //console.log(this.props.data)
+        const {current_data} = this.state
+        if(JSON.stringify(current_data)!==JSON.stringify(this.props.data)){
+          select(this.node).selectAll("*").remove();
+          this.createGraph()
+          this.state.current_data = this.props.data
+        }
         return <svg ref={node => this.node = node}
         width={window.innerWidth} height={window.innerHeight}>
         </svg>

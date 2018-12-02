@@ -57,7 +57,7 @@ class Frontend extends Component {
   render() {
     const { numbers } = this.state
     const { users }   = this.state
-    console.log(users)
+
     if (numbers.length !==0) {
       return(
         <div>
