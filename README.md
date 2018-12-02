@@ -25,21 +25,21 @@ I used Node.js for the GithubAccess part of the assignment. I started using it i
 npm is a package manager for the JavaScript programming language. I used this on Linux to download all the required packages and to start the React application.
 
 ## Project
-My project consists of a Force-Directed Graph. In order to populate this graph with data, there are two choices.
-1. **Query for user repositories**
+My project consists of a Force-Directed Graph. In order to populate this graph with data, there are two choices.  
+1. **Query for user repositories**  
 If only the user field in the form at the top is supplied then the Graph will show the repositories available for the given user.
-The number in the nodes represents the size of a repo. If you hover over a node, you can see the name of the repo.
+The number in the nodes represents the size of a repo. If you hover over a node, you can see the name of the repo.  
 ![](show-user.png)
 
-2. **Query for contributors & number of commits.**
-If both the user and the repo field are supplied, then the Graph will show a visualization of the contributors and their respective number of commits. The nodes resize depending on the number of commites they represent. Again if you hover over a node, you can see the name of the user who contributed.
+2. **Query for contributors & number of commits.**  
+If both the user and the repo field are supplied, then the Graph will show a visualization of the contributors and their respective number of commits. The nodes resize depending on the number of commites they represent. Again if you hover over a node, you can see the name of the user who contributed.  
 ![](contributors.png)
 
-**Error Checking**
-In the case that the fetch instructon fails, for various reasons, could be that the API limit has been achieved, or that the supplied repo doesn't belong to a certain user. A message will be displayed that hints at the possible error.
+**Error Checking**  
+In the case that the fetch instructon fails, for various reasons, could be that the API limit has been achieved, or that the supplied repo doesn't belong to a certain user. A message will be displayed that hints at the possible error.  
 ![](error.png)
 
-**Help**
-In case the interface is confusing, which I hope is not. There is a help button that explains the functionality of the app.
+**Help**  
+In case the interface is confusing, which I hope is not. There is a help button that explains the functionality of the app.  
 ![](help.png)
 ## Install
