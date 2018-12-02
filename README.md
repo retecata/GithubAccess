@@ -1,4 +1,4 @@
-# Github Data Visualizatione
+# Github Data Visualization
 This project is part of CS3012 Coursework, Trinity College Dublin.  
 The aim is to interrogate the Github API and fetch data that could be useful in elucidating aspects of the software engineering process. The course requires the data to be used in some sort of visualization. The project I put together collects data regarding repos, commits and contributors and shows it in a Force Directed Graph. The size of the nodes scales depending on the number of commits. This way, my application makes it easy to view the users with the most impact on a project. (The number of contributors shown is capped at 30).
 
