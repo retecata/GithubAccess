@@ -1,6 +1,6 @@
 # Github Data Visualization
 This project is part of CS3012 Coursework, Trinity College Dublin.
-The aim is to interrogate the Github API and fetch data that could be useful in elucidating aspects of the software engineer process. The course requires the data to be used in some sort of visualization.
+The aim is to interrogate the Github API and fetch data that could be useful in elucidating aspects of the software engineering process. The course requires the data to be used in some sort of visualization.
 
 ## Technologies used
 1. React
@@ -42,4 +42,11 @@ In the case that the fetch instructon fails, for various reasons, could be that 
 **Help**  
 In case the interface is confusing, which I hope is not. There is a help button that explains the functionality of the app.  
 ![](help.png)
+
 ## Install
+Installation requires npm to be installed on the machine. All the dependecies of the project are listed in /visual/package.json. Thus, simply clone the Github repo, then perform  
+**npm install**  
+Then   
+**npm start**  
+Which runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
